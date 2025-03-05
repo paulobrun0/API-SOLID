@@ -2,24 +2,26 @@ import { expect, describe, it } from 'vitest'
 import { RegisterUseCase } from './register'
 
 import { compare } from 'bcryptjs'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
+import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
 describe('Register Use Case', () => {
-  it('should has user password upon registration', async () => {
-    const registerUseCase = new RegisterUseCase({
-      async findByEmail() {
-        return null
-      },
+  it('should be able to register', async () => {
+    const UsersRepository = new InMemoryUsersRepository()
+    const registerUseCase = new RegisterUseCase(UsersRepository)
 
-      async create(data) {
-        return {
-          id: 'user-1',
-          name: data.name,
-          email: data.email,
-          password_hash: data.password_hash,
-          create_at: new Date(),
-        }
-      },
+    const { user } = await registerUseCase.execute({
+      name: 'Paulo Vitor',
+      email: 'paulovitor@gmail.com',
+      password: '123456',
     })
+
+    expect(user.id).toEqual(expect.any(String))
+  })
+
+  it('should has user password upon registration', async () => {
+    const UsersRepository = new InMemoryUsersRepository()
+    const registerUseCase = new RegisterUseCase(UsersRepository)
 
     const { user } = await registerUseCase.execute({
       name: 'Paulo Vitor',
@@ -30,5 +32,26 @@ describe('Register Use Case', () => {
     const isPasswordCorreclyHashed = await compare('123456', user.password_hash)
 
     expect(isPasswordCorreclyHashed).toBe(true)
+  })
+
+  it('should not be able to register with same email twice', async () => {
+    const UsersRepository = new InMemoryUsersRepository()
+    const registerUseCase = new RegisterUseCase(UsersRepository)
+
+    const email = 'paulovitor@gmail.com'
+
+    await registerUseCase.execute({
+      name: 'Paulo Vitor',
+      email,
+      password: '123456',
+    })
+
+    expect(() =>
+      registerUseCase.execute({
+        name: 'Paulo Vitor',
+        email,
+        password: '123456',
+      }),
+    ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
 })
