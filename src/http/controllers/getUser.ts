@@ -1,5 +1,5 @@
 import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
-import { UserNotFoundError } from '@/user-cases/errors/User-not-found-error'
+import { UserNotFoundError } from '@/user-cases/errors/user-not-found-error'
 import { GetUserByIdUseCase } from '@/user-cases/getUserById'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -9,7 +9,7 @@ export async function getUserById(
   reply: FastifyReply,
 ) {
   const getUserByIdRequestSchema = z.object({
-    id: z.string(),
+    id: z.string().uuid(),
   })
 
   const { id } = getUserByIdRequestSchema.parse(request.params)
@@ -27,6 +27,6 @@ export async function getUserById(
         message: err.message,
       })
     }
-    return reply.status(500) // TODO fix me
+    throw err
   }
 }
