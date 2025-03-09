@@ -11,7 +11,7 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
     const endOfTheDay = dayjs(date).endOf('date')
 
     const checkInOnSameDate = this.items.find((checkIn) => {
-      const checkInDate = dayjs(checkIn.create_at)
+      const checkInDate = dayjs(checkIn.created_at)
       const isOnSameDate =
         checkInDate.isAfter(startOfTheDay) && checkInDate.isBefore(endOfTheDay)
 
@@ -31,7 +31,7 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
       user_id: data.user_id,
       gym_id: data.gym_id,
       validated_at: data.validated_at ? new Date(data.validated_at) : null,
-      create_at: new Date(),
+      created_at: new Date(),
     }
 
     this.items.push(CheckIn)
