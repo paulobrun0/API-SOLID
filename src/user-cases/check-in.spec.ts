@@ -1,13 +1,12 @@
-import { expect, describe, it, beforeEach, vi, afterEach } from 'vitest'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
-import { CheckInUserCase } from './checkin'
 import { InMemoryGymRepository } from '@/repositories/in-memory/in-memory-gyms-repositorys'
 import { Decimal } from '@prisma/client/runtime/library'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { CheckInUserCase } from './check-in'
 
 let checkInsRepository: InMemoryCheckInsRepository
 let gymsRepository: InMemoryGymRepository
 let sut: CheckInUserCase
-
 describe('Register Use Case', () => {
   beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository()
@@ -80,5 +79,25 @@ describe('Register Use Case', () => {
     })
 
     expect(checkIn.id).toEqual(expect.any(String))
+  })
+
+  it('should  not be able to check in on distant gym', async () => {
+    gymsRepository.items.push({
+      id: 'gym-02',
+      title: 'Asa gym',
+      description: '',
+      phone: '',
+      latitude: new Decimal(-9.758643),
+      longitude: new Decimal(-36.672404),
+    })
+
+    await expect(() =>
+      sut.execute({
+        gymId: 'gym-02',
+        userId: 'user-01',
+        userLatitude: -9.746787,
+        userLongitude: -36.666882,
+      }),
+    )
   })
 })
