@@ -9,15 +9,6 @@ describe('Fetch Check-in History Use Case', () => {
   beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository()
     sut = new FetchUsersCheckInsHistoryUseCase(checkInsRepository)
-
-    // await gymsRepository.create({
-    //   id: 'gym-01',
-    //   title: 'Javascript gym',
-    //   description: '',
-    //   phone: '',
-    //   latitude: -9.746787,
-    //   longitude: -36.666882,
-    // })
   })
 
   it('should be able to fetch in history', async () => {
