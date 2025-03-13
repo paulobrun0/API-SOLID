@@ -8,7 +8,7 @@ export async function nearby(request: FastifyRequest, reply: FastifyReply) {
     page: z.coerce.number().min(1).default(1),
   })
 
-  const { q, page } = nearbyGymsQuerySchema.parse(request.body)
+  const { q, page } = nearbyGymsQuerySchema.parse(request.query)
 
   const nearbyGymUseCase = makeSeachGymsUseCase()
 

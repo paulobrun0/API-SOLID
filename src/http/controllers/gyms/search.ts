@@ -12,7 +12,7 @@ export async function search(request: FastifyRequest, reply: FastifyReply) {
     }),
   })
 
-  const { latitude, longitude } = searchGymsQuerySchema.parse(request.body)
+  const { latitude, longitude } = searchGymsQuerySchema.parse(request.query)
 
   const searchGymUseCase = makeFetchNearbyGymsUseCase()
 
