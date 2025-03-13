@@ -1,4 +1,4 @@
-import { afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { app } from '@/app'
 import request from 'supertest'
 
@@ -7,7 +7,7 @@ describe('Authenticate (e2)', () => {
     await app.ready()
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     await app.close()
   })
   it('should be able to authenticate', async () => {
