@@ -69,7 +69,3 @@ jobs:
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/apisolid?schema=public"
-
-      - name: Exibir logs do npm (em caso de falha)
-        if: ${{ failure() }}
-        run: cat /home/runner/.npm/_logs/*.log
