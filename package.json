@@ -14,7 +14,7 @@
     "test": "vitest --dir src/use-cases",
     "test:watch": "vitest --dir src/use-cases",
     "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
-    "test:e2e": "vitest run --include 'src/http/controllers/**/*.{test,spec}.?(c|m)[jt]s?(x)' --exclude '**/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*'",
+   "test:e2e": "vitest run",
     "test:e2e:watch": "vitest --dir src/http/controllers/**/*",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
