@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,7 +8,7 @@ datasource db {
 }
 
 enum Role {
-  ADMIN 
+  ADMIN
   MEMBER
 }
 
@@ -24,7 +18,7 @@ model User {
   email         String   @unique
   password_hash String
   role          Role     @default(MEMBER)
-  create_at     DateTime @default(now())
+  created_at    DateTime @default(now())
 
   checkIns CheckIn[]
 
@@ -33,7 +27,7 @@ model User {
 
 model CheckIn {
   id           String    @id @default(uuid())
-  created_at    DateTime  @default(now())
+  created_at   DateTime  @default(now())
   validated_at DateTime?
 
   user    User   @relation(fields: [user_id], references: [id])
@@ -46,13 +40,14 @@ model CheckIn {
 }
 
 model Gym {
-  id          String    @id @default(uuid())
+  id          String  @id @default(uuid())
   title       String
   description String?
   phone       String?
   latitude    Decimal
   longitude   Decimal
-  checkIns    CheckIn[]
+
+  checkIns CheckIn[]
 
   @@map("gyms")
 }
