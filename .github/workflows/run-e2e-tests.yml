@@ -16,50 +16,16 @@ jobs:
           POSTGRESQL_USERNAME: docker
           POSTGRESQL_PASSWORD: docker
           POSTGRESQL_DATABASE: apisolid
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-
-      - name: Atualizar npm
-        run: npm install -g npm@latest
-
-      - name: Listar diretório de trabalho
-        run: pwd
-
-      - name: Listar arquivos no diretório atual
-        run: ls -R
-
-      - name: Verificar se o package.json existe
-        run: |
-          if [ -f ./prisma/vitest-environment-prisma/package.json ]; then
-            echo "package.json existe"
-          else
-            echo "package.json não existe"
-            exit 1
-          fi
-
-      - name: Configurar vitest-environment-prisma
-        run: |
-          cd prisma/vitest-environment-prisma
-          npm install
-          npm run build
-          cd ../..
-          npm install ./prisma/vitest-environment-prisma
-
-      - name: Executar migrações do Prisma
-        run: npx prisma migrate dev --name init
 
       - name: Instalar dependências
         run: npm ci
