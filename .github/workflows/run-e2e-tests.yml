@@ -33,6 +33,15 @@ jobs:
       - name: Listar arquivos no diretório atual
         run: ls -R
 
+      - name: Verificar se o package.json existe
+        run: |
+          if [ -f ./prisma/vitest-environment-prisma/package.json ]; then
+            echo "package.json existe"
+          else
+            echo "package.json não existe"
+            exit 1
+          fi
+
       - name: Instalar dependências
         run: npm ci
 
