@@ -1,4 +1,4 @@
-import { makeGetUserCheckInsMetricsUseCase } from '@/user-cases/factories/make-get-user-check-ins-metrics-use-case'
+import { makeGetUserCheckInsMetricsUseCase } from '@/use-cases/factories/make-get-user-check-ins-metrics-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function metrics(request: FastifyRequest, reply: FastifyReply) {
