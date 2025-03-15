@@ -12,18 +12,20 @@ jobs:
         image: bitnami/postgresql
         ports:
           - 5432:5432
-      environment:
+      env:
         POSTGRESQL_USERNAME: docker
         POSTGRESQL_PASSWORD: docker
-        POSTGRESQL_DATABASE: apisolid
+        POSTGRESQL_DATABASE: apisolid 
+        POSTGRESQL_HOST: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: 'npm'
+          node-version: 18 
+          cache: 'npm' 
       
       - run: npm ci
 
