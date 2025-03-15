@@ -44,9 +44,9 @@ jobs:
 
       - name: Instalar dependências
         run: npm ci
-
+        
       - name: Gerar Prisma Client
-        run: npx prisma generate
+        run: npx prisma generate --schema=./schema.prisma  
 
       - name: Executar testes E2E
         run: npm run test:e2e
