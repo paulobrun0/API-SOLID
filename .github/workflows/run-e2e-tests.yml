@@ -16,6 +16,11 @@ jobs:
           POSTGRESQL_USERNAME: docker
           POSTGRESQL_PASSWORD: docker
           POSTGRESQL_DATABASE: apisolid
+        options: >-  # Adicionei opções de saúde para garantir que o PostgreSQL esteja pronto
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout do código
@@ -30,8 +35,26 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
+      - name: Gerar cliente do Prisma  # Adicionei um passo para gerar o Prisma Client
+        run: npx prisma generate
+
+      - name: Executar migrações do Prisma  # Adicionei um passo para aplicar as migrações
+        run: npx prisma migrate dev --name init
+
       - name: Executar testes E2E
         run: npm run test:e2e
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/apisolid?schema=public"
+
+      - name: Exibir logs do npm (em caso de falha)  # Adicionei um passo para exibir logs em caso de erro
+        if: ${{ failure() }}
+        run: |
+          npm_cache_dir=$(npm config get cache)
+          log_dir="$npm_cache_dir/_logs"
+          if [ -d "$log_dir" ]; then
+            echo "Logs encontrados:"
+            cat "$log_dir"/*.log
+          else
+            echo "Nenhum log encontrado."
+          fi
