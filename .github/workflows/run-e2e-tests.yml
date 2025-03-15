@@ -16,6 +16,11 @@ jobs:
           POSTGRESQL_USERNAME: docker
           POSTGRESQL_PASSWORD: docker
           POSTGRESQL_DATABASE: apisolid
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout do código
@@ -26,6 +31,9 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+
+      - name: Atualizar npm
+        run: npm install -g npm@latest
 
       - name: Listar diretório de trabalho
         run: pwd
@@ -42,14 +50,26 @@ jobs:
             exit 1
           fi
 
+      - name: Configurar vitest-environment-prisma
+        run: |
+          cd prisma/vitest-environment-prisma
+          npm install
+          npm run build
+          cd ../..
+          npm install ./prisma/vitest-environment-prisma
+
+      - name: Executar migrações do Prisma
+        run: npx prisma migrate dev --name init
+
       - name: Instalar dependências
         run: npm ci
-
-      - name: Gerar Prisma Client
-        run: npx prisma generate --schema=${GITHUB_WORKSPACE}/schema.prisma 
 
       - name: Executar testes E2E
         run: npm run test:e2e
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/apisolid?schema=public"
+
+      - name: Exibir logs do npm (em caso de falha)
+        if: ${{ failure() }}
+        run: cat /home/runner/.npm/_logs/*.log
