@@ -18,9 +18,9 @@ jobs:
           POSTGRESQL_DATABASE: apisolid
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@3
         with:
           node-version: 18
           cache: "npm"
