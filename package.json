@@ -9,7 +9,7 @@
     "start": "node build/server.js",
     "test:create-prisma-environment": "npm install ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm install vitest-environment-prisma",
-    "build": "tsup src --out-dir build",
+    "build": "tsup src --out-dir build", 
     "lint": "eslint . --ext .ts --fix",
     "test": "vitest --dir src/use-cases",
     "test:watch": "vitest --dir src/use-cases",
