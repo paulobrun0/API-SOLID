@@ -1,5 +1,8 @@
 node_modules
 build
 .env
-prisma
+prisma/migrations
+prisma/schema.prisma
+prisma/vitest-environment-prisma/prisma-test-environment.ts
+!prisma/vitest-environment-prisma
 coverage
