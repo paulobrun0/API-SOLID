@@ -3,6 +3,5 @@ build
 .env
 prisma/migrations
 prisma/schema.prisma
-prisma/vitest-environment-prisma/prisma-test-environment.ts
 !prisma/vitest-environment-prisma
 coverage
