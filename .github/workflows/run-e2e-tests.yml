@@ -18,17 +18,29 @@ jobs:
           POSTGRESQL_DATABASE: apisolid
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout do código
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-      
-      - run: npm ci
 
-      - run: npm run test:e2e
+      - name: Atualizar npm
+        run: npm install -g npm@latest
 
+      - name: Listar diretório de trabalho
+        run: pwd
+
+      - name: Listar arquivos no diretório atual
+        run: ls -R
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar testes E2E
+        run: npm run test:e2e
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/apisolid?schema=public"
