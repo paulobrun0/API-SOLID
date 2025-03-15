@@ -27,9 +27,6 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      - name: Atualizar npm
-        run: npm install -g npm@latest
-
       - name: Listar diretório de trabalho
         run: pwd
 
