@@ -16,6 +16,11 @@ jobs:
           POSTGRESQL_USERNAME: docker
           POSTGRESQL_PASSWORD: docker
           POSTGRESQL_DATABASE: apisolid
+        options: >-
+          --health-cmd "pg_isready -U docker"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout repository
@@ -31,7 +36,9 @@ jobs:
         run: npm ci
 
       - name: Ensure prisma test environment exists
-        run: mkdir -p prisma/vitest-environment-prisma && npm init -y --prefix prisma/vitest-environment-prisma
+        run: |
+          mkdir -p prisma/vitest-environment-prisma
+          echo '{ "name": "vitest-environment-prisma", "version": "1.0.0", "type": "module", "main": "vitest-environment-prisma.ts" }' > prisma/vitest-environment-prisma/package.json
 
       - name: Install prisma test environment dependencies
         run: npm install --prefix prisma/vitest-environment-prisma
