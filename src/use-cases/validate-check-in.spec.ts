@@ -32,6 +32,7 @@ describe('Validate Check-in Use Case', () => {
   })
 
   it('should be able to validate an inexistent check-in', async () => {
+
     await expect(
       sut.execute({
         checkInId: 'inexistent-check-in-id',
@@ -50,6 +51,7 @@ describe('Validate Check-in Use Case', () => {
     const twentyOneMinutesInMs = 1000 * 60 * 21
 
     vi.advanceTimersByTime(twentyOneMinutesInMs)
+
 
     await expect(
       sut.execute({
