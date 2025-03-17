@@ -9,7 +9,7 @@
     "start": "node build/server.js",
     "test:create-prisma-environment": "npm install ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm install vitest-environment-prisma",
-    "build": "tsup src --out-dir build", 
+    "build": "tsup src --out-dir build",
     "lint": "eslint . --ext .ts --fix",
     "test": "vitest --dir src/use-cases",
     "test:watch": "vitest --dir src/use-cases",
@@ -39,8 +39,9 @@
     "tsup": "8.3.6",
     "tsx": "4.19.3",
     "typescript": "5.7.3",
-    "vite-tsconfig-paths": "5.1.4",
-    "vitest": "3.0.7",
+    "vite": "^6.2.2",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.7",
     "vitest-environment-prisma": "0.4.2"
   },
   "dependencies": {
