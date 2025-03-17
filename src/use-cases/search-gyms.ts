@@ -17,8 +17,8 @@ export class SearchGymsUseCase {
     query,
     page,
   }: SearchGymsUseCaseRequest): Promise<SearchGymsUseCaseResponse> {
-    const gyms = await this.gymRepository.searchManyQuery(query, page)
-
+    const gyms = await this.gymRepository.searchMany(query, page)
+    
     return { gyms }
   }
 }

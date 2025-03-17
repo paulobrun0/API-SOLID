@@ -3,6 +3,7 @@ import { Decimal } from '@prisma/client/runtime/library'
 import { FindManyNearbyParams, GymsRepository } from '../gyms-respository'
 import { randomUUID } from 'node:crypto'
 import { getDistanceBetweenCoordinates } from '@/Utils/get-distance-between-coordinates'
+import { Decimal } from '@prisma/client/runtime/library'
 
 export class InMemoryGymRepository implements GymsRepository {
   public items: Gym[] = []

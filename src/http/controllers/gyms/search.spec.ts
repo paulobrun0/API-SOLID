@@ -19,28 +19,28 @@ describe('Search Gym (e2)', () => {
       .post('/gyms')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        title: 'Code Gym',
-        description: 'Some description',
-        phone: '1236456565',
-        latitude: -9.746787,
-        longitude: -36.666882,
+        title: 'JavaScript Gym',
+        description: 'Some description.',
+        phone: '1199999999',
+        latitude: -27.2092052,
+        longitude: -49.6401091,
       })
 
     await request(app.server)
       .post('/gyms')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        title: 'Javascript Gym',
-        description: 'Some description',
-        phone: '1236456565',
-        latitude: -9.758643,
-        longitude: -36.672404,
+        title: 'TypeScript Gym',
+        description: 'Some description.',
+        phone: '1199999999',
+        latitude: -27.2092052,
+        longitude: -49.6401091,
       })
 
     const response = await request(app.server)
       .get('/gyms/search')
       .query({
-        q: 'Javascript',
+        q: 'JavaScript',
       })
       .set('Authorization', `Bearer ${token}`)
       .send()
@@ -49,7 +49,7 @@ describe('Search Gym (e2)', () => {
     expect(response.body.gyms).toHaveLength(1)
     expect(response.body.gyms).toEqual([
       expect.objectContaining({
-        title: 'Javascript Gym',
+        title: 'JavaScript Gym',
       }),
     ])
   })
