@@ -1,4 +1,4 @@
-import { makeValidateCheckInsUseCase } from '@/user-cases/factories/make-validate-check-ins'
+import { makeValidateCheckInsUseCase } from '@/use-cases/factories/make-validate-check-ins'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
